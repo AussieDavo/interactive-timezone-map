@@ -16,7 +16,8 @@ https://web.interactive-timezone-map.workers.dev/
 
 1. **Clone the repository**
    ```bash
-   cd interactive_Timezone_Map
+   git clone https://github.com/AussieDavo/interactive-timezone-map.git
+   cd interactive-timezone-map
    ```
 
 2. **Create virtual environment**
