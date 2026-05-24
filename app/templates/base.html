@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg', v=asset_version('favicon.svg')) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css', v=asset_version('css/style.min.css')) }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.min.js', v=asset_version('js/main.min.js')) }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Timezone logo">
+  <defs>
+    <radialGradient id="ocean" cx="36%" cy="34%">
+      <stop offset="0%" stop-color="#9fddff"/>
+      <stop offset="62%" stop-color="#2f95ff"/>
+      <stop offset="100%" stop-color="#133f70"/>
+    </radialGradient>
+    <linearGradient id="landA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b5dc4b"/>
+      <stop offset="100%" stop-color="#3f8f1f"/>
+    </linearGradient>
+    <linearGradient id="landB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d9b061"/>
+      <stop offset="100%" stop-color="#9a6d21"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="12" y1="84" x2="117" y2="53" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffbf2e"/>
+      <stop offset="45%" stop-color="#ffe44a"/>
+      <stop offset="100%" stop-color="#ff8a00"/>
+    </linearGradient>
+    <filter id="ringGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.2" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <circle cx="64" cy="70" r="50" fill="url(#ocean)"/>
+
+  <g transform="rotate(-12 64 70)">
+    <path d="M20 60 L34 49 L44 56 L44 70 L35 75 L24 71 Z" fill="url(#landA)"/>
+    <path d="M32 78 L45 72 L53 82 L47 95 L36 92 Z" fill="#4ca32f"/>
+    <path d="M66 46 L82 42 L95 51 L92 66 L81 73 L68 66 Z" fill="url(#landA)"/>
+    <path d="M77 73 L93 69 L100 83 L91 97 L80 95 Z" fill="url(#landB)"/>
+    <path d="M59 24 L67 23 L74 25 L70 28 L62 28 Z" fill="#eef7ff"/>
+    <path d="M55 111 L65 109 L76 112 L70 115 L58 115 Z" fill="#e5f0ff"/>
+  </g>
+
+  <path d="M 12 86 Q 64 123 117 55" fill="none" stroke="#000" stroke-width="13" opacity="0.28" filter="url(#ringGlow)"/>
+  <path d="M 12 84 Q 64 121 117 53" fill="none" stroke="url(#ring)" stroke-width="10" stroke-linecap="round" filter="url(#ringGlow)"/>
+  <path d="M 15 84 Q 64 118 113 54" fill="none" stroke="#fff7b0" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+
+  <g transform="translate(64 24)">
+    <path d="M0 0 C-14 0 -24 10 -24 24 C-24 40 -10 52 0 67 C10 52 24 40 24 24 C24 10 14 0 0 0 Z" fill="#0f1015" stroke="#ff9a00" stroke-width="4" filter="url(#ringGlow)"/>
+    <circle cx="0" cy="24" r="17" fill="#161924" stroke="#ffcd41" stroke-width="2"/>
+    <text x="0" y="29" text-anchor="middle" font-family="Consolas, 'Lucida Console', monospace" font-size="11" font-weight="700" fill="#7cff2e">14:36</text>
+  </g>
+</svg>

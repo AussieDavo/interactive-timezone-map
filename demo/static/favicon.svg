@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <radialGradient id="earthGradient" cx="36%" cy="34%">
+      <stop offset="0%" stop-color="#9fddff"/>
+      <stop offset="58%" stop-color="#4fa2ff"/>
+      <stop offset="100%" stop-color="#173d69"/>
+    </radialGradient>
+    <radialGradient id="atmoRing" cx="50%" cy="50%">
+      <stop offset="70%" stop-color="#b6e3ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#74b8ff" stop-opacity="0.06"/>
+    </radialGradient>
+    <linearGradient id="cometCore" x1="96" y1="34" x2="0" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fff3d8" stop-opacity="1"/>
+      <stop offset="45%" stop-color="#ff6a00" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#ff3d00" stop-opacity="0.5"/>
+    </linearGradient>
+    <filter id="earthUnderGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6.5"/>
+    </filter>
+    <filter id="cometGlow" x="-30%" y="-30%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Strong contrast base for white backgrounds -->
+  <ellipse cx="64" cy="66" rx="66" ry="64" fill="#000" opacity="0.58" filter="url(#earthUnderGlow)"/>
+
+  <!-- Simplified Earth body -->
+  <circle cx="64" cy="64" r="60" fill="url(#earthGradient)"/>
+  <circle cx="64" cy="64" r="60" fill="none" stroke="#08243f" stroke-width="2.8" opacity="0.65"/>
+  <circle cx="64" cy="64" r="61.5" fill="none" stroke="url(#atmoRing)" stroke-width="3"/>
+
+  <!-- Minimal continents for tiny-size readability -->
+  <g transform="rotate(-18 64 64)">
+    <path d="M 39 44 L 52 40 L 61 48 L 58 62 L 46 66 L 37 58 Z" fill="#1e7f52" opacity="0.92"/>
+    <path d="M 63 46 L 84 45 L 90 58 L 82 74 L 66 72 L 60 58 Z" fill="#32a76a" opacity="0.9"/>
+    <path d="M 54 13 L 66 11 L 78 14 L 73 19 L 60 20 L 51 17 Z" fill="#eef8ff" opacity="0.92"/>
+    <path d="M 50 112 L 64 110 L 79 114 L 72 118 L 58 119 L 49 116 Z" fill="#e5f3ff" opacity="0.88"/>
+  </g>
+
+  <!-- High-impact comet trail -->
+  <g filter="url(#cometGlow)">
+    <path d="M 95 33 Q 58 70, 2 126" fill="none" stroke="#000" stroke-width="22" opacity="0.44" stroke-linecap="round"/>
+    <path d="M 95 33 Q 58 70, 2 126" fill="none" stroke="url(#cometCore)" stroke-width="18" opacity="0.98" stroke-linecap="round"/>
+    <path d="M 95 33 Q 62 72, 10 122" fill="none" stroke="#ffffff" stroke-width="5.8" opacity="1" stroke-linecap="round"/>
+    <path d="M 95 33 Q 60 71, 6 124" fill="none" stroke="#ffcf66" stroke-width="3.1" opacity="0.96" stroke-linecap="round"/>
+  </g>
+
+  <!-- Comet head and pop rings -->
+  <circle cx="95" cy="33" r="16" fill="none" stroke="#000" stroke-width="3.2" opacity="0.5"/>
+  <circle cx="95" cy="33" r="13.8" fill="#ff5a00"/>
+  <circle cx="95" cy="33" r="6.2" fill="#fff9ef" opacity="0.98"/>
+  <circle cx="95" cy="33" r="19" fill="none" stroke="#ff7a1a" stroke-width="2.8" opacity="1" filter="url(#cometGlow)"/>
+  <circle cx="95" cy="33" r="24.5" fill="none" stroke="#ffcf66" stroke-width="2" opacity="0.96" filter="url(#cometGlow)"/>
+</svg>

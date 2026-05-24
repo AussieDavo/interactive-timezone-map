@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Timezone Map</title>
+    <link rel="icon" type="image/svg+xml" href="./static/favicon.svg">
+    <link rel="stylesheet" href="./static/css/style.min.css">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 50px;
+            right: 12px;
+            pointer-events: auto;
+        }
+
+        .theme-toggle-btn {
+            appearance: none;
+            border: 0;
+            border-radius: 999px;
+            padding: 8px 14px;
+            background: rgba(245, 247, 250, 0.16);
+            color: #f5f7fa;
+            font: inherit;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            width: 100%;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(245, 247, 250, 0.24);
+            transform: translateY(-1px);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+            background-color: rgba(50, 50, 50, 0.95);
+            border: 1px solid rgba(245, 247, 250, 0.2);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            min-width: 120px;
+            overflow: hidden;
+        }
+
+        .theme-dropdown[hidden] {
+            display: none;
+        }
+
+        .theme-option {
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #f5f7fa;
+            background-color: transparent;
+            transition: background-color 0.15s ease;
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+        }
+
+        .theme-option:hover {
+            background-color: rgba(245, 247, 250, 0.1);
+        }
+
+        .theme-option.is-selected {
+            background-color: rgba(0, 102, 204, 0.3);
+            color: #4da6ff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header class="app-header">
+            <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="side-menu" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="header-copy">
+                <p class="eyebrow">Interactive<br>Timezone<br>Map</p>
+            </div>
+            <div class="status-pill timeline-pill">
+                <div class="time-slider-wrap">
+                    <div class="timeline-rail">
+                        <div id="slider-live-chip" class="slider-live-chip">
+                            <div class="slider-live-chip-bubble">
+                                <div class="chip-timezone-inline">
+                                    <input id="chip-timezone-input" class="chip-timezone-input" type="text" placeholder="Search city or timezone" autocomplete="off" spellcheck="false" aria-label="Chip timezone" aria-expanded="false" />
+                                    <div id="chip-timezone-dropdown" class="chip-timezone-dropdown" hidden>
+                                        <div id="chip-timezone-list" class="chip-timezone-list"></div>
+                                    </div>
+                                </div>
+                                <button id="chip-edit-toggle" class="chip-toggle chip-edit-toggle chip-control" type="button" aria-label="Datetime picker" title="Datetime picker" aria-expanded="false"><span class="edit-icon" aria-hidden="true"></span></button>
+                                <button id="clock-toggle" class="clock-toggle chip-toggle" type="button" aria-label="Pause clock" aria-pressed="false"><span class="clock-icon" aria-hidden="true"></span></button>
+                                <div class="chip-copy-wrap">
+                                    <button id="chip-copy-toggle" class="chip-toggle chip-copy-toggle" type="button" aria-label="Copy chip time" title="Copy chip time">
+                                        <span class="chip-copy-glyph" aria-hidden="true">&#128203;</span>
+                                    </button>
+                                    <div id="chip-copy-menu" class="pin-copy-menu" role="menu" aria-label="Copy chip time options">
+                                        <button id="chip-copy-utc" class="pin-copy-item" type="button" role="menuitem">Copy UTC</button>
+                                        <button id="chip-copy-local" class="pin-copy-item" type="button" role="menuitem">Copy Local</button>
+                                    </div>
+                                </div>
+                                <strong id="slider-live-time">--:--</strong>
+                                <span id="slider-live-date">your local time</span>
+                            </div>
+                            <div id="chip-datetime-popup" class="chip-datetime-popup" hidden>
+                                <label class="chip-edit-label">Set date and time</label>
+                                <div class="chip-datetime-popup-header">
+                                    <button id="chip-datetime-prev" class="chip-datetime-nav" type="button" aria-label="Previous month">&#x2039;</button>
+                                    <strong id="chip-datetime-month-label" class="chip-datetime-month-label">Month Year</strong>
+                                    <button id="chip-datetime-next" class="chip-datetime-nav" type="button" aria-label="Next month">&#x203A;</button>
+                                </div>
+                                <div class="chip-datetime-weekdays" aria-hidden="true">
+                                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                                </div>
+                                <div id="chip-datetime-day-grid" class="chip-datetime-day-grid" role="grid" aria-label="Calendar"></div>
+                                <div class="chip-datetime-time-row">
+                                    <label for="chip-datetime-hour" class="chip-datetime-time-label">Time</label>
+                                    <div class="chip-datetime-time-group">
+                                        <input id="chip-datetime-hour" class="chip-datetime-time-input" type="number" min="0" max="23" step="1" inputmode="numeric" />
+                                        <div class="chip-datetime-stepper" aria-hidden="true">
+                                            <button type="button" class="chip-datetime-step-btn" data-time-part="hour" data-time-delta="1" tabindex="-1">&#9650;</button>
+                                            <button type="button" class="chip-datetime-step-btn" data-time-part="hour" data-time-delta="-1" tabindex="-1">&#9660;</button>
+                                        </div>
+                                    </div>
+                                    <span class="chip-datetime-time-sep">:</span>
+                                    <div class="chip-datetime-time-group">
+                                        <input id="chip-datetime-minute" class="chip-datetime-time-input" type="number" min="0" max="59" step="1" inputmode="numeric" />
+                                        <div class="chip-datetime-stepper" aria-hidden="true">
+                                            <button type="button" class="chip-datetime-step-btn" data-time-part="minute" data-time-delta="1" tabindex="-1">&#9650;</button>
+                                            <button type="button" class="chip-datetime-step-btn" data-time-part="minute" data-time-delta="-1" tabindex="-1">&#9660;</button>
+                                        </div>
+                                    </div>
+                                    <span class="chip-datetime-time-sep">:</span>
+                                    <div class="chip-datetime-time-group">
+                                        <input id="chip-datetime-second" class="chip-datetime-time-input" type="number" min="0" max="59" step="1" inputmode="numeric" />
+                                        <div class="chip-datetime-stepper" aria-hidden="true">
+                                            <button type="button" class="chip-datetime-step-btn" data-time-part="second" data-time-delta="1" tabindex="-1">&#9650;</button>
+                                            <button type="button" class="chip-datetime-step-btn" data-time-part="second" data-time-delta="-1" tabindex="-1">&#9660;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chip-edit-actions">
+                                    <button id="chip-datetime-clear" class="chip-edit-action chip-edit-action-secondary" type="button">Now</button>
+                                    <button id="chip-datetime-apply" class="chip-edit-action" type="button">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="timeline-pan-left" class="timeline-pan-btn timeline-pan-left" type="button" aria-label="Pan timeline to the past">&#x2039;</button>
+                        <div id="slider-day-segments" class="slider-day-segments" role="slider" tabindex="0" aria-label="Timeline" aria-valuemin="-2880" aria-valuemax="2880" aria-valuenow="0"></div>
+                        <button id="timeline-pan-right" class="timeline-pan-btn timeline-pan-right" type="button" aria-label="Pan timeline to the future">&#x203A;</button>
+                    </div>
+                </div>
+            </div>
+            <button id="topbar-hide" class="topbar-hide-btn" type="button" aria-label="Hide top bar">Hide</button>
+            <div class="theme-selector">
+                <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Select map theme" aria-expanded="false">Theme</button>
+                <div id="theme-dropdown" class="theme-dropdown" hidden>
+                    <div class="theme-option" data-theme="modern">Modern</div>
+                    <div class="theme-option" data-theme="classic">Classic</div>
+                </div>
+            </div>
+        </header>
+
+        <button id="topbar-show" class="show-topbar" type="button" aria-label="Show top bar">Show top bar</button>
+
+        <nav id="side-menu" class="side-menu">
+            <div class="side-menu-header">
+                <h2>List</h2>
+                <button id="menu-close" class="menu-close" type="button" aria-label="Close menu">&times;</button>
+            </div>
+            <section class="country-panel" aria-live="polite">
+                <ul id="pin-list" class="pin-list" aria-label="Placed pins"></ul>
+                <button id="copy-all-pins" class="copy-all-pins" type="button" disabled>Copy all to clipboard</button>
+                <button id="clear-pins" class="clear-pins" type="button" disabled>Clear all pins</button>
+            </section>
+        </nav>
+
+        <div id="overlay" class="overlay"></div>
+
+        <div id="map-container" class="map-container">
+            <div class="map-zoom-controls" role="group" aria-label="Map zoom controls">
+                <button id="map-zoom-out" class="map-zoom-btn" type="button" aria-label="Zoom out">-</button>
+                <button id="map-zoom-reset" class="map-zoom-btn map-zoom-reset" type="button" aria-label="Reset zoom">⟳</button>
+                <button id="map-zoom-in" class="map-zoom-btn" type="button" aria-label="Zoom in">+</button>
+            </div>
+            <div id="map-wrapper" class="map-wrapper">
+                <section class="map-tile" data-tile-index="0" aria-label="Map tile 1">
+                    <div class="svg-host"></div>
+                    <div class="pin-layer"></div>
+                </section>
+                <section class="map-tile" data-tile-index="1" aria-label="Map tile 2">
+                    <div class="svg-host"></div>
+                    <div class="pin-layer"></div>
+                </section>
+                <section class="map-tile" data-tile-index="2" aria-label="Map tile 3">
+                    <div class="svg-host"></div>
+                    <div class="pin-layer"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="./static/js/main.min.js"></script>
+</body>
+</html>
