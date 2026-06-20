@@ -6,6 +6,10 @@ A Flask-based web application for displaying and interacting with an interactive
 
 https://web.interactive-timezone-map.workers.dev/
 
+## App Preview
+
+![Interactive Timezone Map in action](docs/assets/drop_pins.gif)
+
 ## Setup
 
 ### Prerequisites
