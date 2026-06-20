@@ -17,23 +17,31 @@
                     <div class="slider-live-chip-bubble">
                         <div class="chip-timezone-inline">
                             <input id="chip-timezone-input" class="chip-timezone-input" type="text" placeholder="Search city or timezone" autocomplete="off" spellcheck="false" aria-label="Chip timezone" aria-expanded="false" />
+                            <button id="chip-pin-toggle" class="chip-toggle chip-pin-toggle" type="button" aria-label="Drop pin" title="Drop pin"><span class="pin-icon" aria-hidden="true">&#128205;</span></button>
                             <div id="chip-timezone-dropdown" class="chip-timezone-dropdown" hidden>
                                 <div id="chip-timezone-list" class="chip-timezone-list"></div>
                             </div>
                         </div>
-                        <button id="chip-edit-toggle" class="chip-toggle chip-edit-toggle chip-control" type="button" aria-label="Datetime picker" title="Datetime picker" aria-expanded="false"><span class="edit-icon" aria-hidden="true"></span></button>
-                        <button id="clock-toggle" class="clock-toggle chip-toggle" type="button" aria-label="Pause clock" aria-pressed="false"><span class="clock-icon" aria-hidden="true"></span></button>
-                        <div class="chip-copy-wrap">
-                            <button id="chip-copy-toggle" class="chip-toggle chip-copy-toggle" type="button" aria-label="Copy chip time" title="Copy chip time">
-                                <span class="chip-copy-glyph" aria-hidden="true">&#128203;</span>
-                            </button>
-                            <div id="chip-copy-menu" class="pin-copy-menu" role="menu" aria-label="Copy chip time options">
-                                <button id="chip-copy-utc" class="pin-copy-item" type="button" role="menuitem">Copy UTC</button>
-                                <button id="chip-copy-local" class="pin-copy-item" type="button" role="menuitem">Copy Local</button>
+                        <div id="chip-timezone-display" class="chip-timezone-display"></div>
+                        <div class="chip-bottom-row">
+                            <div class="chip-time-info">
+                                <strong id="slider-live-time">--:--</strong>
+                                <span id="slider-live-date">your local time</span>
+                            </div>
+                            <div class="chip-controls">
+                                <button id="chip-edit-toggle" class="chip-toggle chip-edit-toggle chip-control" type="button" aria-label="Date" title="Date" aria-expanded="false"><span class="edit-icon" aria-hidden="true"></span></button>
+                                <button id="clock-toggle" class="clock-toggle chip-toggle" type="button" aria-label="Pause" title="Pause" aria-pressed="false"><span class="clock-icon" aria-hidden="true"></span></button>
+                                <div class="chip-copy-wrap">
+                                    <button id="chip-copy-toggle" class="chip-toggle chip-copy-toggle" type="button" aria-label="Copy" title="Copy">
+                                        <span class="chip-copy-glyph" aria-hidden="true">&#128203;</span>
+                                    </button>
+                                    <div id="chip-copy-menu" class="pin-copy-menu" role="menu" aria-label="Copy options">
+                                        <button id="chip-copy-utc" class="pin-copy-item" type="button" role="menuitem">Copy UTC</button>
+                                        <button id="chip-copy-local" class="pin-copy-item" type="button" role="menuitem">Copy Local</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <strong id="slider-live-time">--:--</strong>
-                        <span id="slider-live-date">your local time</span>
                     </div>
                     <div id="chip-datetime-popup" class="chip-datetime-popup" hidden>
                         <label class="chip-edit-label">Set date and time</label>
