@@ -12,7 +12,7 @@ https://web.interactive-timezone-map.workers.dev/
 
 ### Features
 - Drop pins on map to track timezones
-- Easily copy timestamps from from dropped pins (local and UTC times)
+- Easily copy timestamps from dropped pins (local and UTC times)
 - Search for locations and drop pins from results
 - Go backwards, forwards or pause time by dragging the selector or by choosing from a datetime picker.
   - All dropped pins follow the selected date and time accordingly
@@ -21,7 +21,7 @@ https://web.interactive-timezone-map.workers.dev/
 - Dropped pins and selector timezone persist browser sessions using cookies
 - Hide and show top bar
 - Show selected timezones in a list
-  - Drag and drip list items to reorder
+  - Drag and drop list items to reorder
   - Copy all slected timezones to clipboard
   - Quickly and easily remove all pins
 - Automatically adjusts to cater for daylight savings in all timezones
